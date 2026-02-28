@@ -23,6 +23,10 @@ if %errorLevel% == 0 (
 :: -----------------------------------------
 
 cd "%~dp0files\wifi"
+cd /d "%~dp0files\wifi"
+
+
+
 for  %%f in (*.xml) do (
     netsh wlan add profile filename="%~dp0files\wifi\%%f" user=all
 )
@@ -36,7 +40,12 @@ cls
 :: AGREGANDO WIFI
 :: -----------------------------------------
 echo Instalando Office
-@REM start /b cmd /c "office.bat"
+start /b cmd /c "office.bat"
 start office.bat
-
+cls 
+echo instalado Chrome
+winget install Google.Chrome --silent --accept-package-agreements --accept-source-agreements
+cls
+echo instalado drivers
+powershell -NoProfile -ExecutionPolicy Bypass -Command "$m = (Get-CimInstance Win32_ComputerSystem).Manufacturer; switch -wildcard ($m) { '*Dell*' { 'Instalando drivers de Dell...'; pnputil /add-driver 'C:\ProgramData\Dell\Drivers\*.inf' /subdirs /install } '*HP*' { 'Configurando utilidades HP...'; pnputil /add-driver "C:\SWSetup\*.inf" /subdirs /install } '*Lenovo*' { 'Aplicando ajustes Lenovo...';pnputil /add-driver "C:\DRIVERS\*.inf" /subdirs /install } '*ASUS*' {'aplicando ajustesen ASUS'; pnputil /add-driver "C:\ASUS\*.inf" /subdirs /install } Default { 'Fabricante desconocido: ' + $m } }"
 pause

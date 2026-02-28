@@ -31,6 +31,7 @@
 title Valhala
 echo Instalando Office
 cd /d "%~dp0"
+tar -xf Ohook_Activation_AIO.zip
 if not exist "setup.exe" (
     echo ERROR: No se encuentra 'files\setup.exe' en %cd%
     pause
